@@ -437,7 +437,7 @@ KJUR.jws.JWS.sign = function(alg, sHeader, sPayload, key, pass) {
     if (sigAlg.substr(0, 4) == "Hmac") {
 	if (key === undefined)
 	    throw "hexadecimal key shall be specified for HMAC";
-	var mac = new KJUR.crypto.Mac({'alg': sigAlg, 'pass': hextorstr(key)});
+	var mac = new KJUR.crypto.Mac({'alg': sigAlg, 'pass': key});
 	mac.updateString(uSignatureInput);
 	hSig = mac.doFinal();
     } else if (sigAlg.indexOf("withECDSA") != -1) {
@@ -499,7 +499,7 @@ KJUR.jws.JWS.verify = function(sJWS, key) {
     } else if (sigAlg.substr(0, 4) == "Hmac") {
 	if (key === undefined)
 	    throw "hexadecimal key shall be specified for HMAC";
-	var mac = new KJUR.crypto.Mac({'alg': sigAlg, 'pass': hextorstr(key)});
+	var mac = new KJUR.crypto.Mac({'alg': sigAlg, 'pass': key});
 	mac.updateString(uSignatureInput);
 	hSig2 = mac.doFinal();
 	return hSig == hSig2;
